@@ -1,0 +1,2 @@
+Change in MaterialUI Import ->
+Use import { makeStyles } from '@material-ui/core'; // Not  '@material-ui/core/styles'
