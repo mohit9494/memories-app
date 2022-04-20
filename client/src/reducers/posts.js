@@ -1,12 +1,18 @@
-const postReducer = (state = [], action) => {
+const posts = (posts = [], action) => {
   switch (action.type) {
     case "FETCH_ALL":
       return action.payload;
     case "CREATE":
-      return [...state, action.payload];
+      return posts;
+    case "UPDATE":
+      return posts.map((post) => post._id === action.payload._id ? action.payload : post);
+    case "LIKE":
+      return posts.map((post) => post._id === action.payload._id ? action.payload : post);
+    case 'DELETE':
+      return posts.filter((post) => post._id !== action.payload);
     default:
-      return state;
+      return posts;
   }
 };
 
-export default postReducer;
+export default posts;
