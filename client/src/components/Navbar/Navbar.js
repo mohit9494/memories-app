@@ -52,7 +52,7 @@ const Navbar = () => {
             variant="contained"
             color="primary"
           >
-            LogIn
+            Sign In
           </Button>
         )}
       </Toolbar>
