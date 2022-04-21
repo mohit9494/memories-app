@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 
 import postRoutes from './router/posts.js';
+import userRoutes from './router/user.js';
 
 
 dotenv.config();
@@ -14,13 +15,12 @@ const port = process.env.PORT || 5000
 const url = process.env.MONGODB_URI
 
 const app = express()
-
-
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors())
 
 app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
 mongoose.connect(url).then(() => console.log("Connection to MongoDB is successful"))
     .then(() => app.listen(port, () => console.log(`Server running on Port: ${port}`))

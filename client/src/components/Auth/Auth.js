@@ -3,19 +3,23 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login'
-
-
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+
 
 import useStyles from "./styles";
 import Input from './Input';
 import Icon from './icon';
+import { signin, signup } from '../../actions/auth.js';
 
 const Auth = () => {
 
     const classes = useStyles();
+
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false)
+    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' })
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -27,12 +31,24 @@ const Auth = () => {
         handleShowPassword(false)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+
+        // prevent Default Form Submit
+        e.preventDefault();
+
+        if (isSignup) {
+            dispatch(signup(formData, navigate))
+        } else {
+            dispatch(signin(formData, navigate))
+        }
+        // console.log(formData)
 
     };
 
-    const handleChange = () => {
+    // Capture the values in Form and Set In State
+    const handleChange = (e) => {
 
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
     }
 
@@ -73,7 +89,7 @@ const Auth = () => {
                         {isSignup && (
                             <>
                                 <Input name='firstName' label='First Name' handleChange={handleChange} autoFocus half />
-                                <Input name='firstName' label='First Name' handleChange={handleChange} autoFocus half />
+                                <Input name='lastName' label='Last Name' handleChange={handleChange} autoFocus half />
 
                             </>
                         )}
