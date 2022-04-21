@@ -36,8 +36,8 @@ const Auth = () => {
         console.log(res)
     }
 
-    const googleFailure = () => {
-
+    const googleFailure = (error) => {
+        console.log(error);
     }
 
     return (
@@ -78,7 +78,7 @@ const Auth = () => {
                         cookiePolicy="single_host_origin"
                     />
                 </form>
-                <Grid container justify="flex-end">
+                <Grid container justifyContent="flex-end">
                     <Grid item>
                         <Button onClick={switchMode}>
                             {isSignup ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
