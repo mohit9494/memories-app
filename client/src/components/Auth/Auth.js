@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login'
 
@@ -14,6 +16,8 @@ const Auth = () => {
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleShowPassword = () => setShowPassword((prev) => !prev);
 
@@ -33,7 +37,23 @@ const Auth = () => {
     }
 
     const googleSuccess = async (res) => {
-        console.log(res)
+
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+
+
+
+        try {
+
+            // Dispath the payload
+            dispatch({ type: "AUTH", payload: { result, token } });
+
+            // Redirect to home page after dispathch
+            navigate('/')
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const googleFailure = (error) => {
